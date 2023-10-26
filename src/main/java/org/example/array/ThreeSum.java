@@ -55,8 +55,16 @@ public class ThreeSum {
                         }
                         rightPointer--;
                     } else if (sum > 0) {
+                        int currentRight = nums[rightPointer];
+                        while (leftPointer < rightPointer && currentRight == nums[rightPointer - 1]) {
+                            rightPointer--;
+                        }
                         rightPointer--;
                     } else {
+                        int currentLeft = nums[leftPointer];
+                        while (leftPointer < rightPointer && currentLeft == nums[leftPointer + 1]) {
+                            leftPointer++;
+                        }
                         leftPointer++;
                     }
                 }
