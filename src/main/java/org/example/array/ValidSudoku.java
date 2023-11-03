@@ -1,8 +1,5 @@
 package org.example.array;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ValidSudoku {
 
     private static Solution solution = new Solution();
@@ -39,54 +36,24 @@ public class ValidSudoku {
     private static class Solution {
 
         public boolean isValidSudoku(char[][] board) {
-            Map<Integer, Map<Character, Integer>> sudokuMap = new HashMap<>();
+            int[][] sudokuMap = new int[27][9];
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[0].length; j++) {
+                    if (board[i][j] == '.') {
+                        continue;
+                    }
                     if (!(board[i][j] >= '1' && board[i][j] <= '9')) {
-                        if (board[i][j] != '.') {
-                            return false;
-                        } else {
-                            continue;
-                        }
+                        return false;
                     }
                     int rowKey = i;
                     int columnKey = 9 + j;
                     int gridKey = 18 + i / 3 + (j / 3) * 3;
-                    if (sudokuMap.containsKey(rowKey)) {
-                        Map<Character, Integer> sudokuRowMap = sudokuMap.get(rowKey);
-                        if (sudokuRowMap.containsKey(board[i][j])) {
-                            return false;
-                        } else {
-                            sudokuRowMap.put(board[i][j], 1);
-                        }
-                    } else {
-                        Map<Character, Integer> sudokuRowMap = new HashMap<>();
-                        sudokuRowMap.put(board[i][j], 1);
-                        sudokuMap.put(rowKey, sudokuRowMap);
-                    }
-                    if (sudokuMap.containsKey(columnKey)) {
-                        Map<Character, Integer> sudokuColumnMap = sudokuMap.get(columnKey);
-                        if (sudokuColumnMap.containsKey(board[i][j])) {
-                            return false;
-                        } else {
-                            sudokuColumnMap.put(board[i][j], 1);
-                        }
-                    } else {
-                        Map<Character, Integer> sudokuColumnMap = new HashMap<>();
-                        sudokuColumnMap.put(board[i][j], 1);
-                        sudokuMap.put(columnKey, sudokuColumnMap);
-                    }
-                    if (sudokuMap.containsKey(gridKey)) {
-                        Map<Character, Integer> sudokuGridMap = sudokuMap.get(gridKey);
-                        if (sudokuGridMap.containsKey(board[i][j])) {
-                            return false;
-                        } else {
-                            sudokuGridMap.put(board[i][j], 1);
-                        }
-                    } else {
-                        Map<Character, Integer> sudokuGridMap = new HashMap<>();
-                        sudokuGridMap.put(board[i][j], 1);
-                        sudokuMap.put(gridKey, sudokuGridMap);
+                    int index = board[i][j] - '1';
+                    sudokuMap[rowKey][index]++;
+                    sudokuMap[columnKey][index]++;
+                    sudokuMap[gridKey][index]++;
+                    if (sudokuMap[rowKey][index] > 1 || sudokuMap[columnKey][index] > 1 || sudokuMap[gridKey][index] > 1) {
+                        return false;
                     }
                 }
             }
