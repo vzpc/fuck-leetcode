@@ -1,8 +1,5 @@
 package org.example.string;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ZigZagConversion {
 
     private static Solution solution = new Solution();
