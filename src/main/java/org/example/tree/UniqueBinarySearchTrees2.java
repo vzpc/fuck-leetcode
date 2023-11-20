@@ -10,8 +10,8 @@ public class UniqueBinarySearchTrees2 {
     public static void main(String[] args) {
         List<TreeNode> result = solution.generateTrees(3);
         for (TreeNode treeNode : result) {
-            List<Integer> inorderTraversalResult = preorderTraversal(treeNode);
-            for (Integer i : inorderTraversalResult) {
+            List<Integer> preorderTraversalResult = preorderTraversal(treeNode);
+            for (Integer i : preorderTraversalResult) {
                 System.out.print(i + ",");
             }
             System.out.println();
