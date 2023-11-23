@@ -49,17 +49,17 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
             for (int i = 0; i < inorder.length; i++) {
                 inorderIndexMap.put(inorder[i], i);
             }
-            return buildTree(preorder, inorder, 0, 0, inorder.length - 1);
+            return buildTree(preorder, 0, 0, inorder.length - 1);
         }
 
-        public TreeNode buildTree(int[] preorder, int[] inorder, int preorderIndex, int inorderStart, int inorderEnd) {
+        public TreeNode buildTree(int[] preorder, int preorderIndex, int inorderStart, int inorderEnd) {
             if (inorderStart > inorderEnd) {
                 return null;
             }
             TreeNode root = new TreeNode(preorder[preorderIndex]);
             int inorderIndex = inorderIndexMap.get(preorder[preorderIndex]);
-            root.left = buildTree(preorder, inorder, preorderIndex + 1, inorderStart, inorderIndex - 1);
-            root.right = buildTree(preorder, inorder, preorderIndex + inorderIndex - inorderStart + 1, inorderIndex + 1, inorderEnd);
+            root.left = buildTree(preorder, preorderIndex + 1, inorderStart, inorderIndex - 1);
+            root.right = buildTree(preorder, preorderIndex + inorderIndex - inorderStart + 1, inorderIndex + 1, inorderEnd);
             return root;
         }
     }
