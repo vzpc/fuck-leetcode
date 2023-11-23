@@ -49,17 +49,17 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversal {
             for (int i = 0; i < inorder.length; i++) {
                 inorderIndexMap.put(inorder[i], i);
             }
-            return buildTree(inorder, postorder, postorder.length - 1, 0, inorder.length - 1);
+            return buildTree(postorder, postorder.length - 1, 0, inorder.length - 1);
         }
 
-        public TreeNode buildTree(int[] inorder, int[] postorder, int postorderIndex, int inorderStart, int inorderEnd) {
+        public TreeNode buildTree(int[] postorder, int postorderIndex, int inorderStart, int inorderEnd) {
             if (inorderStart > inorderEnd) {
                 return null;
             }
             TreeNode root = new TreeNode(postorder[postorderIndex]);
             int inorderIndex = inorderIndexMap.get(postorder[postorderIndex]);
-            root.right = buildTree(inorder, postorder, postorderIndex - 1, inorderIndex + 1, inorderEnd);
-            root.left = buildTree(inorder, postorder, postorderIndex - inorderEnd + inorderIndex - 1, inorderStart, inorderIndex - 1);
+            root.right = buildTree(postorder, postorderIndex - 1, inorderIndex + 1, inorderEnd);
+            root.left = buildTree(postorder, postorderIndex - inorderEnd + inorderIndex - 1, inorderStart, inorderIndex - 1);
             return root;
         }
     }
