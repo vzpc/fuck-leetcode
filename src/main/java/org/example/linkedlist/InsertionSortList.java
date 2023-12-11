@@ -25,26 +25,24 @@ public class InsertionSortList {
             if (head == null) {
                 return null;
             }
-            ListNode result = new ListNode(Integer.MIN_VALUE, null);
-            ListNode pointer = head;
+            ListNode dummy = new ListNode(0, head);
+            ListNode lastSorted = head;
+            ListNode pointer = head.next;
             while (pointer != null) {
-                ListNode pointer1 = result;
-                ListNode pointer2 = result.next;
-                while (pointer2 != null) {
-                    if (pointer.val >= pointer1.val && pointer.val <= pointer2.val) {
-                        pointer1.next = new ListNode(pointer.val, pointer2);
-                        break;
-                    } else {
-                        pointer1 = pointer1.next;
-                        pointer2 = pointer2.next;
+                if (lastSorted.val <= pointer.val) {
+                    lastSorted = lastSorted.next;
+                } else {
+                    ListNode prev = dummy;
+                    while (prev.next.val <= pointer.val) {
+                        prev = prev.next;
                     }
+                    lastSorted.next = pointer.next;
+                    pointer.next = prev.next;
+                    prev.next = pointer;
                 }
-                if (pointer2 == null) {
-                    pointer1.next = new ListNode(pointer.val, null);
-                }
-                pointer = pointer.next;
+                pointer = lastSorted.next;
             }
-            return result.next;
+            return dummy.next;
         }
     }
 }
