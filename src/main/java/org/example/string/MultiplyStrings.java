@@ -1,8 +1,5 @@
 package org.example.string;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MultiplyStrings {
 
     private static Solution solution = new Solution();
@@ -18,41 +15,25 @@ public class MultiplyStrings {
             if (num1.equals("0") || num2.equals("0")) {
                 return "0";
             }
-            List<String> results = new ArrayList<>();
-            StringBuffer zero = new StringBuffer();
-            for (int i = num2.length() - 1; i >= 0; i--) {
-                int carry = 0;
-                if (i < num2.length() - 1) {
-                    zero.append("0");
+            int[] result = new int[num1.length() + num2.length()];
+            for (int i = 0; i < num1.length(); i++) {
+                for (int j = 0; j < num2.length(); j++) {
+                    int product = (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
+                    result[i + j + 1] += product;
                 }
-                StringBuffer result = new StringBuffer();
-                result.append(zero);
-                for (int j = num1.length() - 1; j >= 0; j--) {
-                    int product = (num2.charAt(i) - '0') * (num1.charAt(j) - '0') + carry;
-                    result.append(product % 10);
-                    carry = product / 10;
-                }
-                if (carry > 0) {
-                    result.append(carry);
-                }
-                results.add(result.reverse().toString());
             }
-            StringBuffer result = new StringBuffer();
-            int carry = 0;
-            for (int i = 0; i < results.get(results.size() - 1).length(); i++) {
-                int sum = carry;
-                for (String s : results) {
-                    if (i < s.length()) {
-                        sum += s.charAt(s.length() - 1 - i) - '0';
-                    }
+            for (int i = result.length - 1; i > 0; i--) {
+                result[i - 1] += result[i] / 10;
+                result[i] = result[i] % 10;
+            }
+            StringBuffer stringBuffer = new StringBuffer();
+            for (int i = 0; i < result.length; i++) {
+                if (i == 0 && result[i] == 0) {
+                    continue;
                 }
-                result.append(sum % 10);
-                carry = sum / 10;
+                stringBuffer.append(result[i]);
             }
-            if (carry > 0) {
-                result.append(carry);
-            }
-            return result.reverse().toString();
+            return stringBuffer.toString();
         }
     }
 }
